@@ -20,6 +20,7 @@ srand(time(NULL));
     int A[4];                       //zadeklarowana tablica
     const int dlTabA = 12;
     int losowanieWartTab ( int A[], int dlTabA);
+    int ileRazyLiczba(int liczba, int A[]);
     int liczba{};
 
 //Zadanie nr 3
@@ -56,21 +57,7 @@ case 2:
     cout<<endl;
     cout<<"Podaj jakas liczbe: "<<endl;
     cin>>liczba;
-    int wynik;
-    for (int i=0; i<dlTabA; i++){
-
-        if ((liczba==A[i])){
-        //    cout<<"Liczba zawiera sie w tablicy"<<endl;
-        wynik++;
-    cout<<"Liczba: "<<liczba<<" wystepuje w tablicy A: "<<wynik<<" razy."<<endl;
-
-        }
-
-    }
-    //cout<<"Liczba: "<<liczba<<" wystepuje w tablicy A: "<<wynik<<" razy."<<endl;
-
-
-
+    cout<<"Liczba: "<<liczba<<" wystepuje w tablicy: "<<ileRazyLiczba(liczba, A)<<endl;
     petla();
     break;
 
@@ -151,4 +138,15 @@ for( int i = 0; i < dlTabA; i++ )
         A[ i ] =( rand() % 10 ) - 5;
         cout << A[ i ] << " ";
     }
+}
+// funkcja sprawdzajaca dana liczbe w tablicy
+int ileRazyLiczba(int liczba, int A[]) {
+    int ile = 0;
+    int arrSize = 12;
+    for (int i = 0; i < arrSize; ++i) {
+        if (A[i] == liczba) {
+            ++ile;
+        }
+    }
+    return ile;
 }
