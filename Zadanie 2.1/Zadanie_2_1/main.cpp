@@ -3,11 +3,10 @@
 #include <cstdio>
 #include <ctime>
 #include<iomanip>
+#include <cmath>
 
 void petla();
-
 using namespace std;
-
 int main()
 {
 srand(time(NULL));
@@ -35,14 +34,16 @@ srand(time(NULL));
     void najwiekszaNajmniejszaLiczba(int X[], int dlTabX);
     void reversX(int X[], int dlTabX);
 //Zadanie nr 4
+double sredniaArt;
+double odchylenie (int X[], int dlTabX, double sredniaArt);
+// petla
 int choice{};
 do{
-
 cout<<"Wybierz - 0 - aby wyjsc z programu! "<<endl<<endl;
 cout<<"Zadanie 1 \nZadeklarowac tablice Y 10-elementowa typu int."<<endl<<endl;
 cout<<"Zadanie 2 \nZadeklarowac tablic A 12-elementowa typu calkowitego."<<endl<<endl;
 cout<<"Zadanie 3 \nW funkcji main() zadeklarowac 30-elementowa tablice X typu int."<<endl<<endl;
-cout<<"Zadanie 4 \nNapisac funkcje, ktora oblicza odchylenie standardowe od sredniej arytmetycznej."<<endl<<endl;
+cout<<"Zadanie 4 \nNapisac funkcje, ktora oblicza odchylenie standardowe od sredniej arytmetycznej tablicy X."<<endl<<endl;
 cout<<"Ktore zadanie wykonac? "<<endl<<endl;
 cin>> choice;
 
@@ -56,8 +57,8 @@ case 0:
 case 1:
     cout<<"Zadanie nr 1"<<endl;
     wartosciTablicy(Y, dlTabY);
-    cout<<"Suma rowna sie: "<<sumaWartDodat(Y, dlTabY)<<endl;
-    cout<<"Srednia rowna sie: "<<sredniaWartUjemnych(Y, dlTabY)<<endl;
+    cout<<"Suma wartosci dodatnich tablicy Y: "<<sumaWartDodat(Y, dlTabY)<<endl;
+    cout<<"Srednia wartosci ujemnych tablicy Y: "<<sredniaWartUjemnych(Y, dlTabY)<<endl;
     petla();
     break;
 
@@ -67,7 +68,7 @@ case 2:
     cout<<endl;
     cout<<"Podaj jakas liczbe: "<<endl;
     cin>>liczba;
-    cout<<"Liczba: "<<liczba<<" wystepuje w tablicy: "<<ileRazyLiczba(liczba, A)<<endl;
+    cout<<"Liczba: "<<liczba<<" wystepuje w tablicy A: "<<ileRazyLiczba(liczba, A)<<endl;
     petla();
     break;
 
@@ -76,21 +77,19 @@ case 3:
     cout<<"Podaw wartosci poczatkowe 'p' i koncowe 'k' przedzialu z jakiego maja losowac sie liczby do tablicy X: "<<endl;
     cin>>p;
     cin>>k;
-    losowanieWartTabX ( X,  dlTabX, p, k);
+    losowanieWartTabX (X,  dlTabX, p, k);
     wyswietlTabliceX (X, dlTabX);
     cout<<"Srednia wartosc tablicy to: "<<setprecision(2)<<sredniaWartTabX(X, dlTabX)<<endl<<endl;
     najwiekszaNajmniejszaLiczba(X, dlTabX);
     reversX(X, dlTabX);
-
-
-
-
+    //przypisanie wartosci sredniej dla zadania nr 4
+    sredniaArt = sredniaWartTabX(X, dlTabX);
     petla();
     break;
 
 case 4:
     cout<<"Zadanie nr 4"<<endl;
-
+    cout<<"Odchylenie standardowe od sredniej arytmetycznej sumy wartosci tablicy X to: "<<odchylenie(X, dlTabX, sredniaArt)<<endl;
     petla();
     break;
 
@@ -99,7 +98,6 @@ default:
     petla();
     break;
 }
-
 
 }while(choice);
     return 0;
@@ -251,6 +249,21 @@ cout<<"Odwrocona kolejnosc elementow tablicy: "<<endl;
     cout << endl;
 }
 
+
+//========================================
+//Funkcje do zadania nr 4
+//========================================
+//funkcja liczaca odchylenie
+double odchylenie (int X[], int dlTabX, double sredniaArt) {
+    double odchyl;
+    double l=0;
+    for (int i=0; i<dlTabX; i++){
+        l=l+((X[i]-sredniaArt)*(X[i]-sredniaArt));
+        odchyl=sqrt(l/dlTabX);
+    }
+
+        return odchyl;
+}
 
 
 
