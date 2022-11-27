@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
+#include<iomanip>
+
 void petla();
 
 using namespace std;
@@ -11,19 +13,27 @@ int main()
 srand(time(NULL));
 //Pole deklaracji zmiennych i funkcji
 //Zadanie nr 1
-    int Y[4];                       //zadeklarowana tablica
-    const int dlTabY = 2;            //zadeklarowana wielkosc tablicy
+    const int dlTabY = 10;            //zadeklarowana wielkosc tablicy
+    int Y[dlTabY];                       //zadeklarowana tablica
     int wartosciTablicy(int Y[], int dlTabY);
     int sumaWartDodat (int Y[], int dlTabY);
     double sredniaWartUjemnych (int Y[], int dlTabY);
 //Zadanie nr 2
-    int A[4];                       //zadeklarowana tablica
     const int dlTabA = 12;
+    int A[dlTabA];                       //zadeklarowana tablica
     int losowanieWartTab ( int A[], int dlTabA);
     int ileRazyLiczba(int liczba, int A[]);
     int liczba{};
 
 //Zadanie nr 3
+    const int dlTabX = 30;
+    int X[dlTabX];
+    int p{}, k{};
+    int losowanieWartTabX ( int X[], int dlTabX, int p, int k);
+    void wyswietlTabliceX (int X[], int dlTabX);
+    double sredniaWartTabX (int X[], int dlTabX);
+    void najwiekszaNajmniejszaLiczba(int X[], int dlTabX);
+    void reversX(int X[], int dlTabX);
 //Zadanie nr 4
 int choice{};
 do{
@@ -63,6 +73,17 @@ case 2:
 
 case 3:
     cout<<"Zadanie nr 3"<<endl;
+    cout<<"Podaw wartosci poczatkowe 'p' i koncowe 'k' przedzialu z jakiego maja losowac sie liczby do tablicy X: "<<endl;
+    cin>>p;
+    cin>>k;
+    losowanieWartTabX ( X,  dlTabX, p, k);
+    wyswietlTabliceX (X, dlTabX);
+    cout<<"Srednia wartosc tablicy to: "<<setprecision(2)<<sredniaWartTabX(X, dlTabX)<<endl<<endl;
+    najwiekszaNajmniejszaLiczba(X, dlTabX);
+    reversX(X, dlTabX);
+
+
+
 
     petla();
     break;
@@ -87,10 +108,14 @@ default:
 //==================================================================
 //                       F U N K C J E
 //==================================================================
+//funkcja porzadkowa
 void petla(){
 getchar();getchar();
 system("cls");
 }
+
+
+//========================================
 // Funkcje do zadania nr 1:
 //========================================
 // funkcja generujaca dane do tablicy
@@ -100,6 +125,7 @@ cout << "Wpisz "<<dlTabY<<" elementow tablicy: "<< endl;
         cin>>Y[i];
     }
 }
+
 
 // funkcja liczaca sume elementow dodatnich
 int sumaWartDodat (int Y[], int dlTabY){
@@ -112,6 +138,8 @@ int suma{};
     return suma;
 }
 
+
+//funkcja liczaca srednia wartosci ujemnych
 double sredniaWartUjemnych (int Y[], int dlTabY){
 double sumaDoSredniej{};
 double srednia{};
@@ -123,14 +151,14 @@ double srednia{};
         }
     }
     srednia = sumaDoSredniej/j;
-
     return srednia;
 }
+
 
 //========================================
 //Funkcje do zadania nr 2
 //========================================
-//funkcja generujaca liczby w przedziale <-5, 5>2
+//funkcja generujaca liczby w przedziale <-5, 5>
 int losowanieWartTab ( int A[], int dlTabA)
 {
 for( int i = 0; i < dlTabA; i++ )
@@ -139,6 +167,8 @@ for( int i = 0; i < dlTabA; i++ )
         cout << A[ i ] << " ";
     }
 }
+
+
 // funkcja sprawdzajaca dana liczbe w tablicy
 int ileRazyLiczba(int liczba, int A[]) {
     int ile = 0;
@@ -150,3 +180,83 @@ int ileRazyLiczba(int liczba, int A[]) {
     }
     return ile;
 }
+
+
+//========================================
+//Funkcje do zadania nr 3
+//========================================
+//wypelnianie tablicy losowymi elementami
+int losowanieWartTabX ( int X[], int dlTabX, int p, int k){
+for( int i = 0; i < dlTabX; i++ )
+    {
+        X[i] =  rand()%(k-p+1)+p;
+    }
+}
+
+
+//funkcja do wystwietlania tablicy w rzedach po 10 wartosci
+void wyswietlTabliceX(int X[], int dlTabX){
+cout<<"Wylosowane wartosci tablicy X: "<<endl;
+    for(int i=0; i<=dlTabX-1; i++)
+    {
+        cout <<setw(2)<<X[i];
+        if((i+1)%10==0) cout << endl;
+
+    }
+    cout << endl;
+}
+
+
+// funkcja liczaca srednia elementow tablicy X
+double sredniaWartTabX (int X[], int dlTabX){
+double sumaDoSredniej{};
+double srednia{};
+     for (int i = 0; i < dlTabX; i++){
+            sumaDoSredniej = sumaDoSredniej + X[i];
+    }
+    srednia = sumaDoSredniej/dlTabX;
+    return srednia;
+}
+
+
+// wyswietlanie najwiekszej i najmniejszej wartosci tablicy
+void najwiekszaNajmniejszaLiczba(int X[], int dlTabX){
+int najwieksza{};
+int najmniejsza;
+for(int i=0; i<dlTabX; i++){
+    if(X[i] > najwieksza){
+        najwieksza = X[i];
+        }
+    }
+    cout << "Najwieksza liczba tablicy X: " << najwieksza << endl;
+
+ for(int i=0; i<dlTabX; i++){
+         if(X[i] < najmniejsza){
+            najmniejsza = X[i];
+        }
+    }
+    cout << "Najmniejsza liczba tablicy X: " << najmniejsza << endl<<endl;
+}
+
+
+//odwrocenie kolejnosci elementow tablicy
+void reversX(int X[], int dlTabX){
+cout<<"Odwrocona kolejnosc elementow tablicy: "<<endl;
+    for( int i=dlTabX-1; i>=0; i--)
+    {
+        cout <<setw(2)<<X[i];
+        if((i)%10==0) cout << endl;
+
+    }
+    cout << endl;
+}
+
+
+
+
+
+
+
+
+
+
